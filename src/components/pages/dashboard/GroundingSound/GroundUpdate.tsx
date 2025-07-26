@@ -1,15 +1,17 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
-import { useCreateArticleMutation } from "@/redux/features/article/articleApi";
-import { useGetSingleGroundQuery, useUpdateGroundMutation } from "@/redux/features/Ground/groundApi";
+import {
+  useGetSingleGroundQuery,
+  useUpdateGroundMutation,
+} from "@/redux/features/Ground/groundApi";
 import { handleAsyncWithToast } from "@/utils/handleAsyncWithToast";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Button, ConfigProvider, Input, message, Select } from "antd";
+import { Button, ConfigProvider, Input, Select } from "antd";
 import { Upload, X } from "lucide-react";
 import Image from "next/image";
 import { useParams, useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { z } from "zod";
 
@@ -25,12 +27,14 @@ const formSchema = z.object({
     .union([z.instanceof(File), z.null(), z.string()])
     .refine((file) => file !== null, {
       message: "Audio file is required",
-    }).optional(),
+    })
+    .optional(),
   image: z
     .union([z.instanceof(File), z.null(), z.string()])
     .refine((file) => file !== null, {
       message: "Image is required",
-    }).optional(),
+    })
+    .optional(),
 });
 
 type FormData = {
@@ -46,15 +50,14 @@ type FormData = {
 };
 
 export default function UpdateGroundingSoundForm() {
-     const router = useRouter();
-      const params = useParams();
-      const groundId = params.id;
+  const router = useRouter();
+  const params = useParams();
+  const groundId = params.id;
 
+  const { data: groundData, isLoading } = useGetSingleGroundQuery(groundId, {
+    skip: !groundId,
+  });
 
-      const { data: groundData, isLoading } = useGetSingleGroundQuery(groundId, {
-        skip: !groundId,
-      });
-    
   const {
     control,
     handleSubmit,
@@ -77,25 +80,21 @@ export default function UpdateGroundingSoundForm() {
     },
   });
 
-
   // Populate form with article data when it's available
-    useEffect(() => {
-      if (groundData?.result) {
-        const ground = groundData.result;
-        setValue("mood", ground.mood || "");
-        setValue("bringsYouHere", ground.goal[0] || "");
-        setValue("mentalHealthIssue", ground.cause[0] || "");
-        setValue("emotionallyOverwhelmed", ground.emotionalReason[0] || "");
-        setValue("soundName", ground.soundName || "");
-        setValue("authorityName", ground.authority || "");
-        setValue("time", ground.time || "");
-        setValue("audioFile", ground.soundAudioFile || null);
-        setValue("image", ground.soundImage || null);
-      }
-    }, [groundData, setValue]);
-
-
-
+  useEffect(() => {
+    if (groundData?.result) {
+      const ground = groundData.result;
+      setValue("mood", ground.mood || "");
+      setValue("bringsYouHere", ground.goal[0] || "");
+      setValue("mentalHealthIssue", ground.cause[0] || "");
+      setValue("emotionallyOverwhelmed", ground.emotionalReason[0] || "");
+      setValue("soundName", ground.soundName || "");
+      setValue("authorityName", ground.authority || "");
+      setValue("time", ground.time || "");
+      setValue("audioFile", ground.soundAudioFile || null);
+      setValue("image", ground.soundImage || null);
+    }
+  }, [groundData, setValue]);
 
   const formData = watch();
 
@@ -114,10 +113,10 @@ export default function UpdateGroundingSoundForm() {
     setValue("image", null);
   };
 
-  const [updateGroundMutation] =  useUpdateGroundMutation();
+  const [updateGroundMutation] = useUpdateGroundMutation();
 
   const onSubmit = async (data: FormData) => {
-     const formDataPayload = new FormData();
+    const formDataPayload = new FormData();
 
     const body = {
       mood: data.mood,
@@ -147,14 +146,14 @@ export default function UpdateGroundingSoundForm() {
     }
   };
 
-    function handleImageUpload(event: React.ChangeEvent<HTMLInputElement>): void {
-        const file = event.target.files?.[0];
-        if (file) {
-            setValue("image", file);
-        }
+  function handleImageUpload(event: React.ChangeEvent<HTMLInputElement>): void {
+    const file = event.target.files?.[0];
+    if (file) {
+      setValue("image", file);
     }
+  }
 
-     if (isLoading) {
+  if (isLoading) {
     return (
       <div className="h-full min-h-[calc(100vh-280px)] flex justify-center items-center">
         <p>Loading grounding sound...</p>
@@ -519,7 +518,9 @@ export default function UpdateGroundingSoundForm() {
                             className="cursor-pointer"
                           >
                             <Upload className="h-6 w-6 text-gray-400 mx-auto mb-2" />
-                            <p className="text-sm text-gray-500">Upload Audio</p>
+                            <p className="text-sm text-gray-500">
+                              Upload Audio
+                            </p>
                           </label>
                         </>
                       )}
@@ -551,14 +552,14 @@ export default function UpdateGroundingSoundForm() {
                               : ""}
                           </p> */}
 
-                           <Image
-                                                    src={groundData?.result?.soundImage || ""}
-                                                    alt="Current sound image"
-                                                    width={200}
-                                                    height={200}
-                                                    className="w-full h-40 object-contain rounded-md"
-                                                    unoptimized
-                                                  />
+                          <Image
+                            src={groundData?.result?.soundImage || ""}
+                            alt="Current sound image"
+                            width={200}
+                            height={200}
+                            className="w-full h-40 object-contain rounded-md"
+                            unoptimized
+                          />
                           <p className="text-xs">Image uploaded</p>
                         </div>
                       ) : (
@@ -575,7 +576,9 @@ export default function UpdateGroundingSoundForm() {
                             className="cursor-pointer"
                           >
                             <Upload className="h-6 w-6 text-gray-400 mx-auto mb-2" />
-                            <p className="text-sm text-gray-500">Upload Image</p>
+                            <p className="text-sm text-gray-500">
+                              Upload Image
+                            </p>
                           </label>
                         </>
                       )}

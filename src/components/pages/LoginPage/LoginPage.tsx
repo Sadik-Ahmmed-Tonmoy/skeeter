@@ -49,7 +49,7 @@ const router = useRouter();
   const onSubmit = async (data: LoginFormData) => {
     const response = await handleAsyncWithToast(async () => {
       return loginMutation(data);
-    });
+    } , "Logging in...");
     if (response?.data?.success) {
       const user = (await verifyToken(
         response?.data?.result?.accessToken

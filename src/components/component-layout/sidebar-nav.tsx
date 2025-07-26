@@ -5,8 +5,6 @@ import { Box } from "@/components/ui-library/box";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { cn } from "@/lib/utils";
 import { AnimatePresence } from "framer-motion";
-import { usePathname } from "next/navigation";
-import { useState } from "react";
 import MyMenu from "../ui/MyMenu/MyMenu";
 
 const menuItems = [

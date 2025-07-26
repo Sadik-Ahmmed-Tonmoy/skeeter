@@ -1,11 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
-import { useCreateArticleMutation } from "@/redux/features/article/articleApi";
-import { useCreateGoalMutation, useGetSingleGoalQuery, useUpdateGoalMutation } from "@/redux/features/Goal/goalApi";
+import {
+  useGetSingleGoalQuery,
+  useUpdateGoalMutation,
+} from "@/redux/features/Goal/goalApi";
 import { handleAsyncWithToast } from "@/utils/handleAsyncWithToast";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Button, ConfigProvider, Input, message, Select } from "antd";
+import { Button, ConfigProvider, Input, Select } from "antd";
 import { Upload, X } from "lucide-react";
 import Image from "next/image";
 import { useParams, useRouter } from "next/navigation";
@@ -34,17 +36,17 @@ type FormData = {
   emotionallyOverwhelmed: string;
   title: string;
   subtitle: string;
-  image: File | null;
+  image: File | string | null;
 };
 
 export default function UpdateGoal() {
-   const router = useRouter();
-   const params = useParams();
-   const goalId = params.id;
+  const router = useRouter();
+  const params = useParams();
+  const goalId = params.id;
 
-   const { data: goalData, isLoading } = useGetSingleGoalQuery(goalId, {
-     skip: !goalId,
-   });
+  const { data: goalData, isLoading } = useGetSingleGoalQuery(goalId, {
+    skip: !goalId,
+  });
   const {
     control,
     handleSubmit,
@@ -65,22 +67,20 @@ export default function UpdateGoal() {
     },
   });
 
-    useEffect(() => {
-      if (goalData?.result) {
-        const goal = goalData.result;
+  useEffect(() => {
+    if (goalData?.result) {
+      const goal = goalData.result;
 
-        setValue("image", goal.goalImage || null);
+      setValue("image", goal.goalImage || null);
 
-        setValue("mood", goal.mood || "");
-        setValue("bringsYouHere", goal.goal[0] || "");
-        setValue("mentalHealthIssue", goal.cause[0] || "");
-        setValue("emotionallyOverwhelmed", goal.emotionalReason[0] || "");
-        setValue("title", goal.title || "");
-        setValue("subtitle", goal.subtitle || "");
-
-        
-      }
-    }, [goalData, setValue]);
+      setValue("mood", goal.mood || "");
+      setValue("bringsYouHere", goal.goal[0] || "");
+      setValue("mentalHealthIssue", goal.cause[0] || "");
+      setValue("emotionallyOverwhelmed", goal.emotionalReason[0] || "");
+      setValue("title", goal.title || "");
+      setValue("subtitle", goal.subtitle || "");
+    }
+  }, [goalData, setValue]);
 
   const formData = watch();
 
@@ -115,7 +115,7 @@ export default function UpdateGoal() {
     }, "Updating goal...");
     if (response?.data?.success) {
       reset();
-    router.push("/dashboard/goals?tab=all-goals");
+      router.push("/dashboard/goals?tab=all-goals");
     }
   };
 
@@ -123,14 +123,13 @@ export default function UpdateGoal() {
     const file = event.target.files?.[0] || null;
     setValue("image", file, { shouldValidate: true });
   }
-    if (isLoading) {
-        return (
-        <div className="h-full min-h-[calc(100vh-280px)] flex justify-center items-center">
-            <p>Loading goal...</p>
-        </div>
-        );
-    }
-  
+  if (isLoading) {
+    return (
+      <div className="h-full min-h-[calc(100vh-280px)] flex justify-center items-center">
+        <p>Loading goal...</p>
+      </div>
+    );
+  }
 
   return (
     <div className="overflow-hidden overflow-y-auto">
@@ -492,7 +491,7 @@ export default function UpdateGoal() {
                   className="w-full bg-teal-600 hover:bg-teal-700 text-white py-3 px-4 rounded-md text-base font-medium h-auto"
                   size="large"
                 >
-                    Update Goal
+                  Update Goal
                 </Button>
               </div>
             </div>

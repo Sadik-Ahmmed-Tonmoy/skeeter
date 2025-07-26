@@ -2,10 +2,6 @@
 "use client";
 
 import {
-  useDeleteArticleMutation,
-  useGetAllArticlesQuery,
-} from "@/redux/features/article/articleApi";
-import {
   useDeleteGroundMutation,
   useGetAllGroundQuery,
 } from "@/redux/features/Ground/groundApi";

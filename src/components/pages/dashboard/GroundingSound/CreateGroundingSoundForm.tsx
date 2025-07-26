@@ -1,13 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
-import { useCreateArticleMutation } from "@/redux/features/article/articleApi";
 import { useCreateGroundMutation } from "@/redux/features/Ground/groundApi";
 import { handleAsyncWithToast } from "@/utils/handleAsyncWithToast";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Button, ConfigProvider, Input, message, Select } from "antd";
+import { Button, ConfigProvider, Input, Select } from "antd";
 import { Upload, X } from "lucide-react";
-import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { Controller, useForm } from "react-hook-form";
 import { z } from "zod";
@@ -118,12 +116,12 @@ export default function CreateGroundingSoundForm() {
     }
   };
 
-    function handleImageUpload(event: React.ChangeEvent<HTMLInputElement>): void {
-        const file = event.target.files?.[0];
-        if (file) {
-            setValue("image", file);
-        }
+  function handleImageUpload(event: React.ChangeEvent<HTMLInputElement>): void {
+    const file = event.target.files?.[0];
+    if (file) {
+      setValue("image", file);
     }
+  }
 
   return (
     <div className="overflow-hidden overflow-y-auto">
@@ -460,7 +458,9 @@ export default function CreateGroundingSoundForm() {
                           >
                             <X className="h-4 w-4 text-red-600 cursor-pointer" />
                           </button>
-                          <p className="font-medium">{formData.audioFile.name}</p>
+                          <p className="font-medium">
+                            {formData.audioFile.name}
+                          </p>
                           <p className="text-xs">Audio uploaded</p>
                         </div>
                       ) : (
@@ -477,7 +477,9 @@ export default function CreateGroundingSoundForm() {
                             className="cursor-pointer"
                           >
                             <Upload className="h-6 w-6 text-gray-400 mx-auto mb-2" />
-                            <p className="text-sm text-gray-500">Upload Audio</p>
+                            <p className="text-sm text-gray-500">
+                              Upload Audio
+                            </p>
                           </label>
                         </>
                       )}
@@ -518,7 +520,9 @@ export default function CreateGroundingSoundForm() {
                             className="cursor-pointer"
                           >
                             <Upload className="h-6 w-6 text-gray-400 mx-auto mb-2" />
-                            <p className="text-sm text-gray-500">Upload Image</p>
+                            <p className="text-sm text-gray-500">
+                              Upload Image
+                            </p>
                           </label>
                         </>
                       )}

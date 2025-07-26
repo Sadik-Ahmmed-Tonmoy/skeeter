@@ -1,10 +1,10 @@
-import type { Metadata } from "next";
-import { Geist, Geist_Mono, Tinos } from "next/font/google";
-import "./globals.css";
 import MyContextProvider from "@/lib/MyContextProvider";
 import SessionProviderForNextAuth from "@/nextAuth/SessionProviderForNextAuth";
 import ReduxStoreProvider from "@/redux/ReduxStoreProvider";
+import type { Metadata } from "next";
+import { Tinos } from "next/font/google";
 import { Toaster } from "sonner";
+import "./globals.css";
 
 const timesNewRoman = Tinos({
   variable: "--font-times-new-roman",
@@ -12,10 +12,7 @@ const timesNewRoman = Tinos({
   weight: ["400", "700"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+
 
 export const metadata: Metadata = {
   title: "Create Next App",

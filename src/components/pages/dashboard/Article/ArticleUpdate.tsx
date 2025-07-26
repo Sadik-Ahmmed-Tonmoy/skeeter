@@ -2,9 +2,8 @@
 "use client";
 
 import {
-  useCreateArticleMutation,
   useGetSingleArticleQuery,
-  useUpdateArticleMutation,
+  useUpdateArticleMutation
 } from "@/redux/features/article/articleApi";
 import { handleAsyncWithToast } from "@/utils/handleAsyncWithToast";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -12,8 +11,8 @@ import { Button, ConfigProvider, Input, Select } from "antd";
 import { Plus, Trash2, Upload, X } from "lucide-react";
 import Image from "next/image";
 import { useParams, useRouter } from "next/navigation";
-import { Controller, useFieldArray, useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
+import { Controller, useFieldArray, useForm } from "react-hook-form";
 import { z } from "zod";
 
 // Updated schema to make image optional for updates

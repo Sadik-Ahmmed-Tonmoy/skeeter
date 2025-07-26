@@ -1,11 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
-import { useCreateArticleMutation } from "@/redux/features/article/articleApi";
 import { useCreateGoalMutation } from "@/redux/features/Goal/goalApi";
 import { handleAsyncWithToast } from "@/utils/handleAsyncWithToast";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Button, ConfigProvider, Input, message, Select } from "antd";
+import { Button, ConfigProvider, Input, Select } from "antd";
 import { Upload, X } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -88,7 +87,7 @@ export default function CreateGroundingSoundForm() {
     }, "Creating goal...");
     if (response?.data?.success) {
       reset();
-    router.push("/dashboard/create-goals?tab=all-goals");
+      router.push("/dashboard/create-goals?tab=all-goals");
     }
   };
 
