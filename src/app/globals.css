@@ -1,0 +1,52 @@
+@import "tailwindcss";
+
+
+/* body {
+  font-family: var(--font-times-new-roman), sans-serif;
+}
+
+:root {
+  --font-times-new-roman: 'Times New Roman', serif;
+  --font-geist-sans: 'Geist Sans', sans-serif;
+  --font-geist-mono: 'Geist Mono', monospace;
+} */
+
+.times-new-roman {
+  font-family: var(--font-times-new-roman), serif;
+}
+
+/* If using global CSS */
+.custom-pagination .ant-pagination-item a {
+  color: #00473E !important;
+}
+
+.custom-pagination .ant-pagination-item-active {
+  border-color: #00473E !important;
+}
+
+.custom-pagination .ant-pagination-item-active a {
+  color: #00473E !important;
+}
+
+.custom-pagination .ant-pagination-item:hover {
+  border-color: #00473E !important;
+}
+
+.custom-pagination .ant-pagination-item:hover a {
+  color: #00473E !important;
+}
+
+.custom-pagination .ant-pagination-prev button:hover,
+.custom-pagination .ant-pagination-next button:hover {
+  color: #00473E !important;
+  border-color: #00473E !important;
+}
+
+@theme {
+  --color-blue-primary: #3257d9;
+  --color-blue-secondary: #f2f4ff;
+
+  /* add breakpoint */
+  --breakpoint-xs: 540px;
+}
+
