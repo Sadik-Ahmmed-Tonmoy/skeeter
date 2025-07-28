@@ -22,7 +22,7 @@ const goalApi = baseApi.injectEndpoints({
 
     getSingleGoal: builder.query({
       query: (id) => ({
-        url: `/admin/get-sinlge-goal/${id}`,
+        url: `/admin/get-single-goal/${id}`,
         method: "GET",
       }),
       providesTags: ["goal"],

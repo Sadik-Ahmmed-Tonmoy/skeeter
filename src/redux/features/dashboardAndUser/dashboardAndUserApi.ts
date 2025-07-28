@@ -3,6 +3,22 @@ import { baseApi } from "../../api/baseApi";
 
 const dashboardAndUserApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
+    getAllDashboardData: builder.query({
+      query: (data) => {
+        const params = new URLSearchParams();
+        if (data) {
+          data?.forEach((item: any) => {
+            params.append(item.name, item.value as string);
+          });
+        }
+        return {
+          url: `/admin/get-dashoboard-data`,
+          method: "GET",
+          params: params,
+        };
+      },
+      // providesTags: ["user"],
+    }),
     getAllUser: builder.query({
       query: (data) => {
         const params = new URLSearchParams();
@@ -61,6 +77,7 @@ const dashboardAndUserApi = baseApi.injectEndpoints({
 });
 
 export const {
+  useGetAllDashboardDataQuery,
   useGetAllUserQuery,
 
 } = dashboardAndUserApi;

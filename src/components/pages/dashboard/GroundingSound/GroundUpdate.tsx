@@ -16,7 +16,7 @@ import { Controller, useForm } from "react-hook-form";
 import { z } from "zod";
 
 const formSchema = z.object({
-  mood: z.string().min(1, "Mood is required"),
+  mood: z.array(z.string()).min(1, "Mood is required"),
   bringsYouHere: z.string().min(1, "This field is required"),
   mentalHealthIssue: z.string().min(1, "This field is required"),
   emotionallyOverwhelmed: z.string().min(1, "This field is required"),
@@ -38,7 +38,7 @@ const formSchema = z.object({
 });
 
 type FormData = {
-  mood: string;
+  mood: string[];
   bringsYouHere: string;
   mentalHealthIssue: string;
   emotionallyOverwhelmed: string;
@@ -68,7 +68,7 @@ export default function UpdateGroundingSoundForm() {
   } = useForm<FormData>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      mood: "",
+      mood: [],
       bringsYouHere: "",
       mentalHealthIssue: "",
       emotionallyOverwhelmed: "",
@@ -84,7 +84,7 @@ export default function UpdateGroundingSoundForm() {
   useEffect(() => {
     if (groundData?.result) {
       const ground = groundData.result;
-      setValue("mood", ground.mood || "");
+      setValue("mood", ground.mood || []);
       setValue("bringsYouHere", ground.goal[0] || "");
       setValue("mentalHealthIssue", ground.cause[0] || "");
       setValue("emotionallyOverwhelmed", ground.emotionalReason[0] || "");
@@ -499,7 +499,7 @@ export default function UpdateGroundingSoundForm() {
                             {formData.audioFile instanceof File
                               ? formData.audioFile.name
                               : typeof formData.audioFile === "string"
-                              ? formData.audioFile
+                              ? "Current audio file"
                               : ""}
                           </p>
                           <p className="text-xs">Audio uploaded</p>
@@ -552,14 +552,28 @@ export default function UpdateGroundingSoundForm() {
                               : ""}
                           </p> */}
 
-                          <Image
-                            src={groundData?.result?.soundImage || ""}
-                            alt="Current sound image"
-                            width={200}
-                            height={200}
-                            className="w-full h-40 object-contain rounded-md"
-                            unoptimized
-                          />
+                          {formData.image instanceof File ? (
+                            <Image
+                              src={URL.createObjectURL(formData.image)}
+                              alt="Uploaded sound image"
+                              width={200}
+                              height={200}
+                              className="w-full h-40 object-contain rounded-md"
+                              unoptimized
+                            />
+                          ) : typeof formData.image === "string" ? (
+                            <Image
+                              src={formData.image}
+                              alt="Uploaded sound image"
+                              width={200}
+                              height={200}
+                              className="w-full h-40 object-contain rounded-md"
+                              unoptimized
+                            />
+                          ) : (
+                            ""
+                          )}
+
                           <p className="text-xs">Image uploaded</p>
                         </div>
                       ) : (

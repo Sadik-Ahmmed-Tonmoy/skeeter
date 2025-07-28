@@ -89,7 +89,7 @@ export default function CreateGroundingSoundForm() {
     const formDataPayload = new FormData();
 
     const body = {
-      mood: data.mood,
+      mood: [data.mood],
       goal: [data?.bringsYouHere],
       cause: [data?.mentalHealthIssue],
       emotionalReason: [data?.emotionallyOverwhelmed],

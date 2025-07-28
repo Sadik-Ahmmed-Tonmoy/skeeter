@@ -16,7 +16,7 @@ import { Controller, useForm } from "react-hook-form";
 import { z } from "zod";
 
 const formSchema = z.object({
-  mood: z.string().min(1, "Mood is required"),
+  mood: z.array(z.string()).min(1, "Mood is required"),
   bringsYouHere: z.string().min(1, "This field is required"),
   mentalHealthIssue: z.string().min(1, "This field is required"),
   emotionallyOverwhelmed: z.string().min(1, "This field is required"),
@@ -30,7 +30,7 @@ const formSchema = z.object({
 });
 
 type FormData = {
-  mood: string;
+  mood: string[];
   bringsYouHere: string;
   mentalHealthIssue: string;
   emotionallyOverwhelmed: string;
@@ -57,7 +57,7 @@ export default function UpdateGoal() {
   } = useForm<FormData>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      mood: "",
+      mood: [],
       bringsYouHere: "",
       mentalHealthIssue: "",
       emotionallyOverwhelmed: "",
@@ -73,7 +73,7 @@ export default function UpdateGoal() {
 
       setValue("image", goal.goalImage || null);
 
-      setValue("mood", goal.mood || "");
+      setValue("mood", goal.mood || []);
       setValue("bringsYouHere", goal.goal[0] || "");
       setValue("mentalHealthIssue", goal.cause[0] || "");
       setValue("emotionallyOverwhelmed", goal.emotionalReason[0] || "");

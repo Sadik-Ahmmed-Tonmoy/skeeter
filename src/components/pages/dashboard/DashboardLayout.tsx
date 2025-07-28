@@ -94,7 +94,7 @@ export default function DashboardLayout({
           as="aside"
           className="hidden lg:block w-72  h-full sticky top-0 overflow-hidden"
         >
-          <SidebarNav />
+          <SidebarNav setShowSidebar={setShowSidebar}/>
         </Box>
 
         {/* Mobile sidebar overlay */}

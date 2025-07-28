@@ -69,7 +69,7 @@ export default function CreateGroundingSoundForm() {
     const formDataPayload = new FormData();
 
     const body = {
-      mood: data.mood,
+      mood: [data.mood],
       goal: [data?.bringsYouHere],
       cause: [data?.mentalHealthIssue],
       emotionalReason: [data?.emotionallyOverwhelmed],
@@ -87,7 +87,7 @@ export default function CreateGroundingSoundForm() {
     }, "Creating goal...");
     if (response?.data?.success) {
       reset();
-      router.push("/dashboard/create-goals?tab=all-goals");
+      router.push("/dashboard/goals?tab=all-goals");
     }
   };
 
