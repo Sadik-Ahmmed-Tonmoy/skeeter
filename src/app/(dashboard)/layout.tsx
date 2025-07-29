@@ -1,9 +1,13 @@
-
 import DashboardLayout from "@/components/pages/dashboard/DashboardLayout";
+import WithAuthForAdmin from "@/components/WithAuthForAdmin/WithAuthForAdmin";
 import { ReactNode } from "react";
 
 const layout = ({ children }: { children: ReactNode }) => {
-  return <DashboardLayout>{children}</DashboardLayout>;
+  return (
+    <WithAuthForAdmin>
+      <DashboardLayout>{children}</DashboardLayout>
+    </WithAuthForAdmin>
+  );
 };
 
 export default layout;

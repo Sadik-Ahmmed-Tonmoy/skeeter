@@ -1,14 +1,12 @@
 import {
-  createApi,
-  fetchBaseQuery,
   BaseQueryFn,
+  createApi,
   FetchArgs,
+  fetchBaseQuery,
   FetchBaseQueryError,
 } from "@reduxjs/toolkit/query/react";
-import { RootState } from "../store";
 import { logout, setUser } from "../features/auth/authSlice";
-import Swal from "sweetalert2";
-import { signOut } from "next-auth/react";
+import { RootState } from "../store";
 
 const baseQuery = fetchBaseQuery({
   baseUrl: process.env.NEXT_PUBLIC_BASE_URL,
@@ -67,23 +65,24 @@ const baseQueryWithRefreshToken: BaseQueryFn<
         // Retry the original query with the new token
         result = await baseQuery(args, api, extraOptions);
       } else {
-        Swal.fire({
-          icon: "error",
-          title: "Session Expired",
-          text: "Please login again to continue",
-          showConfirmButton: false,
-          showCancelButton: true,
-          cancelButtonText: "Stay Logged Out",
-        }).then((result) => {
-          if (result.isConfirmed) {
-            api.dispatch(logout());
-            signOut();
-          }
-          else if (result.isDismissed) {
-            api.dispatch(logout());
-            signOut();
-          }
-        });
+        // Swal.fire({
+        //   icon: "error",
+        //   title: "Session Expired",
+        //   text: "Please login again to continue",
+        //   showConfirmButton: false,
+        //   showCancelButton: true,
+        //   cancelButtonText: "Stay Logged Out",
+        // }).then((result) => {
+        //   if (result.isConfirmed) {
+        //     api.dispatch(logout());
+        //     signOut();
+        //   }
+        //   else if (result.isDismissed) {
+        //     api.dispatch(logout());
+        //     signOut();
+        //   }
+        // });
+        api.dispatch(logout());
       }
     } catch (error) {
       console.error("Error during token refresh:", error);
@@ -96,8 +95,6 @@ const baseQueryWithRefreshToken: BaseQueryFn<
 export const baseApi = createApi({
   reducerPath: "baseApi",
   baseQuery: baseQueryWithRefreshToken,
-  tagTypes: [
-    "user", "example", "article", "ground", "goal"
-  ],
+  tagTypes: ["user", "example", "article", "ground", "goal"],
   endpoints: () => ({}),
 });
