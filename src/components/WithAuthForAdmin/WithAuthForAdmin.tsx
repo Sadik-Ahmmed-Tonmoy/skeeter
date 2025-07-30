@@ -1,11 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
-import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
-import { ReactNode } from "react";
+import { useCurrentToken } from "@/redux/features/auth/authSlice";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import { logout, useCurrentToken,  } from "@/redux/features/auth/authSlice";
 import { verifyToken } from "@/utils/verifyToken";
+import { useRouter } from "next/navigation";
+import { ReactNode, useEffect, useState } from "react";
 
 const WithAuthForAdmin = ({ children }: { children: ReactNode }) => {
   const dispatch = useAppDispatch();
