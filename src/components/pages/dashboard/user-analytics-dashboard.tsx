@@ -7,9 +7,12 @@ import { LineChart, Line, XAxis, YAxis, CartesianGrid, ResponsiveContainer, Tool
 import { ChevronDown, Users } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { useGetAllDashboardDataQuery } from "@/redux/features/dashboardAndUser/dashboardAndUserApi"
+import { useAppDispatch } from "@/redux/hooks"
+import { logout } from "@/redux/features/auth/authSlice"
 
 
 export function UserAnalyticsDashboard() {
+  const dispatch = useAppDispatch()
   const [selectedPeriod, setSelectedPeriod] = useState<"monthly" | "yearly">("monthly")
   const [objectQuery, setObjectQuery] = useState<{ name: string; value: string }[]>([])
 
@@ -20,9 +23,10 @@ export function UserAnalyticsDashboard() {
     ])
   }, [selectedPeriod])
 
-  const { data, isLoading, isFetching } = useGetAllDashboardDataQuery(objectQuery, {
+  const { data, isLoading, isFetching, isError } = useGetAllDashboardDataQuery(objectQuery, {
     skip: !objectQuery.length,
   })
+
 
   // Calculate growth percentage based on data
   const calculateGrowthPercentage = () => {
@@ -52,7 +56,9 @@ export function UserAnalyticsDashboard() {
     users: number
   }
 
-
+if(isError){
+ dispatch(logout());
+}
 
 
 
