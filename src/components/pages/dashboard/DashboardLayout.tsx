@@ -69,7 +69,9 @@ export default function DashboardLayout({
 
         <h3 className="text-[40px] text-[#004138] times-new-roman">VetCheck</h3>
         {/* profile icon with name */}
-        <div className="hidden  lg:flex items-center space-x-4">
+     <div>
+      {/*  */}
+         <div className="hidden  lg:flex items-center space-x-4">
           {userData?.result?.profileImage ? (
             <img
               src={userData?.result?.profileImage || "/default-profile.png"}
@@ -87,6 +89,7 @@ export default function DashboardLayout({
             <p className="text-base font-medium text-[#747474]">Admin</p>
           </div>
         </div>
+     </div>
       </div>
       <Flex className="h-full relative">
         {/* Desktop sidebar */}
